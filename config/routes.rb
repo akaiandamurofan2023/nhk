@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   resources :users
+  
+  post 'static_pages', to: 'static_pages#search', as: 'program_search'
 end
