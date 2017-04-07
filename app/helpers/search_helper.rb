@@ -19,4 +19,12 @@ module SearchHelper
   def selected_date(search)
     { selected: search ? search[:after] : 0 }
   end
+  
+  def strf_time(date)
+    DateTime.parse(date).strftime("%H時 %M分")
+  end
+  
+  def strif_date(date)
+    date.to_date.strftime("%Y年 %m月 %d日")
+  end
 end

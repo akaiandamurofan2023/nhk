@@ -10,22 +10,23 @@
     
    <label>日付</label>
    <%= select(:value, :after, date_selecter, selected_date(@search)) %>
-   <%= hidden_field_tag(:date, Date.today) %>
+   <%= hidden_field_tag(:date, today) %>
 
    <%= submit_tag %>
   <% end %>
    
   
   <% if @result.present? && @result.present? %>
-    <ul>
-      <% @result["list"][@search[:service]].each do |program| %>
-        <li>時間：<%= program['start_time'] %>〜<%= program['end_time'] %></li>
-        <li>タイトル：<%= program['title'] %></li>
-        <li>サブタイトル：<%= program['subtitle'] %></li>
-        <li>コンテント：<br><%= program['content'] %></li>
-        <li>出演：<%= program['act'] %></li><br>
-      <% end %>
-    </ul>
+    <h3><%= strif_date(@search[:date]) %> の放送</h3>
+      <ul>
+        <% @result["list"][@search[:service]].each do |program| %>
+          <li>時間：<%= strf_time(program['start_time']) %>〜<%= strf_time(program['end_time']) %></li>
+          <li>タイトル：<%= program['title'] %></li>
+          <li>サブタイトル：<%= program['subtitle'] %></li>
+          <li>内容：<br><%= program['content'] %></li>
+          <li>出演：<%= program['act'] %></li><br>
+        <% end %>
+      </ul>
   <% end %>
 
 <% else %>
