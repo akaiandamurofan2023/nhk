@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action :logged_in_user, only: [:create]
   protect_from_forgery with: :exception
   include SessionsHelper
   

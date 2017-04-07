@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   resources :users
   
-  post 'static_pages', to: 'static_pages#search', as: 'program_search'
+  post '/', to: 'static_pages#search', as: 'program_search'
 end

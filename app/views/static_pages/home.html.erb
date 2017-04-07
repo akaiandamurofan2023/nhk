@@ -1,29 +1,41 @@
+<% if logged_in? %>
+      
+  <%= form_tag(program_search_path) do %>
+    
+   <label>エリア</label>
+   <%= collection_select(:value, :area, Area.all, :code, :name, selected_area(@search)) %>
+    
+   <label>番組</label>
+   <%= collection_select(:value, :service, Service.all, :code, :program, selected_service(@search)) %>
+    
+   <label>日付</label>
+   <%= select(:value, :after, date_selecter, selected_date(@search)) %>
+   <%= hidden_field_tag(:date, Date.today) %>
 
-
-
-
-<%= form_tag(program_search_path) do %>
+   <%= submit_tag %>
+  <% end %>
+   
   
- <label>エリア</label>
- <%= collection_select(:value, :area, Area.all, :code, :name) %>
-  
- <label>番組</label>
- <%= collection_select(:value, :service, Service.all, :code, :program) %>
-  
- <label>日付</label>
- <%= select(:value, :before, {今日: 0, 明日: 1, 明後日: 2, ３日後: 3, ４日後: 4, ５日後: 5, ６日後: 6}, selected: (@search ? @search[:value][:before] : 0)) %>
- <%= hidden_field_tag(:date, Date.today) %>
- 
- <%= submit_tag %>
+  <% if @result.present? && @result.present? %>
+    <ul>
+      <% @result["list"][@search[:service]].each do |program| %>
+        <li>時間：<%= program['start_time'] %>〜<%= program['end_time'] %></li>
+        <li>タイトル：<%= program['title'] %></li>
+        <li>サブタイトル：<%= program['subtitle'] %></li>
+        <li>コンテント：<br><%= program['content'] %></li>
+        <li>出演：<%= program['act'] %></li><br>
+      <% end %>
+    </ul>
+  <% end %>
+
+<% else %>
+
+  <div class="center jumbotron">
+    <h1>Welcome to NHK 番組情報！</h1>
+    <p>本サイトは、NHK番組の最新情報をお届けしております。</p>
+    <p>御覧になりたい方はぜひサインアップしてください。</p>
+    <p>下にある"Sign up now!"又は右上の"Login"をクリックしてお進みください！</p>
+    <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+  </div>
+    
 <% end %>
- 
-<%= @search.inspect %>
-
-<div class="center jumbotron">
- <h1>Welcome to NHK 番組情報！</h1>
- <p>本サイトは、NHK番組の最新情報をお届けしております。</p>
- <p>御覧になりたい方はぜひサインアップしてください。</p>
- <p>下にある"Sign up now!"又は右上の"Login"をクリックしてお進みください！</p>
- <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
-</div>
-
